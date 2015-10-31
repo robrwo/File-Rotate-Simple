@@ -1,4 +1,8 @@
 Revision history for File::Rotate::Simple
 
 {{$NEXT}}
+  [Documentation]
+  - Fixed POD error (Mohammad S Anwar)
+
+v0.1.0    2015-10-31 12:52:39+00:00 Europe/London
   - Initial version
