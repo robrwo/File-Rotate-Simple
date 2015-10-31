@@ -4,5 +4,7 @@ Revision history for File::Rotate::Simple
   [Documentation]
   - Fixed POD error (Mohammad S Anwar)
 
+  - Fixed typo in the short description
+
 v0.1.0    2015-10-31 12:52:39+00:00 Europe/London
   - Initial version

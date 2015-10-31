@@ -11,7 +11,7 @@ use version; our $VERSION = version->declare('v0.1.1');
 
 =head1 NAME
 
-File::Rotate::Simple - no-frills fill rotation
+File::Rotate::Simple - no-frills file rotation
 
 =head1 SYNOPSIS
 
