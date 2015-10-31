@@ -7,7 +7,8 @@ use Types::Standard -types;
 
 use namespace::autoclean;
 
-use version; our $VERSION = version->declare('v0.1.3');
+use version;
+$File::Rotate::Simple::VERSION = version->declare('v0.1.3');
 
 =head1 NAME
 
@@ -129,7 +130,7 @@ sub _build_files {
 
         my $index = $1;
 
-        $files[ $index // 0 ] = $file;
+        $files[ $index || 0 ] = $file;
 
     }
 
