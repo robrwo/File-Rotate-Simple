@@ -7,7 +7,7 @@ use Types::Standard -types;
 
 use namespace::autoclean;
 
-use version; our $VERSION = version->declare('v0.1.1');
+use version; our $VERSION = version->declare('v0.1.2');
 
 =head1 NAME
 
