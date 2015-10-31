@@ -183,10 +183,14 @@ sub rotate {
           next;
       }
 
-      my $ext = $index + 1;
-      my $new = $index
-          ? $file =~ s/[.]${index}$/.${ext}/r
-          : $file . '.' . $ext;
+      my $next = $index + 1;
+      my $new = $file->stringify;
+
+      if ($index) {
+          $new =~ s/[.]${index}$/.${next}/;
+      } else {
+          $new .= '.' . $next;
+      }
 
       $file->move($new);
   }

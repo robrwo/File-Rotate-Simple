@@ -1,6 +1,8 @@
 Revision history for File::Rotate::Simple
 
 {{$NEXT}}
+  [Bug Fixes]
+  - Fixed to work on Perl v5.10 and Perl v5.12
 
 v0.1.1    2015-10-31 14:15:39+00:00 Europe/London
   [Documentation]
