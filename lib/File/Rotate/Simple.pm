@@ -138,7 +138,7 @@ sub _build_files {
 
 =head1 METHODS
 
-head2 C<rotate>
+=head2 C<rotate>
 
 Rotates the files.
 
