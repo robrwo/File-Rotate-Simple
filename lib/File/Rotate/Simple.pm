@@ -8,7 +8,7 @@ use Types::Standard -types;
 use namespace::autoclean;
 
 use version;
-$File::Rotate::Simple::VERSION = version->declare('v0.1.3');
+$File::Rotate::Simple::VERSION = version->declare('v0.1.4');
 
 =head1 NAME
 
