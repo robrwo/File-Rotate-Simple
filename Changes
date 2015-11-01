@@ -4,6 +4,9 @@ Revision history for File::Rotate::Simple
   [Bug Fixes]
   - Fixed to work on Perl v5.8
 
+  [Documentation]
+  - Fixed spelling error
+
 v0.1.2    2015-10-31 14:54:10+00:00 Europe/London
   [Bug Fixes]
   - Fixed to work on Perl v5.10 and Perl v5.12
