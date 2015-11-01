@@ -137,6 +137,20 @@ sub _build_files {
     return \@files;
 }
 
+=head1 SEE ALSO
+
+The following modules have similar functionality:
+
+=over
+
+=item * L<File::Rotate::Backup>
+
+=item * L<File::Write::Rotate>
+
+=back
+
+There are also several logging modueles that support log rotation.
+
 =head1 METHODS
 
 =head2 C<rotate>
