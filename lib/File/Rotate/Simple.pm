@@ -202,7 +202,7 @@ sub rotate {
 
 =head1 AUTHOR
 
-Robert Rothenberg, C<< <rrwo at cpan.org> >>
+Robert Rothenberg, C<rrwo@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
