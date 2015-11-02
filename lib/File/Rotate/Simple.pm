@@ -97,6 +97,22 @@ has file => (
     required => 1,
 );
 
+=head2 file_regexp
+
+The regular expression used to match files to rotate.
+
+=cut
+
+has file_regexp => (
+    is      => 'lazy',
+    isa     => RegexpRef,
+    default => sub {
+        my $self = shift;
+        my $base = quotemeta($self->file->basename);
+        qr/^${base}(?:[.]([1-9]\d*))?$/i;
+    },
+);
+
 =begin internal
 
 =head2 C<files>
@@ -117,11 +133,9 @@ has files => (
 sub _build_files {
     my $self = shift;
 
-    my $base = quotemeta($self->file->basename);
-    my $re   = qr/^${base}(?:[.]([1-9]\d*))?$/;
-
     my @files;
 
+    my $re   = $self->file_regexp;
     my $iter = $self->file->parent->iterator;
 
     while (my $file = $iter->()) {
