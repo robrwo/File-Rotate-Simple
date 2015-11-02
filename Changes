@@ -1,6 +1,9 @@
 Revision history for File::Rotate::Simple
 
 {{$NEXT}}
+  [Bug Fixes]
+  - Fixed dependency by setting the minimum version of Moo to 1.001000
+
   [Documentation]
   - Added a SEE ALSO section with similar modules
 

@@ -1,6 +1,6 @@
 package File::Rotate::Simple;
 
-use Moo;
+use Moo 1.001000;
 
 use Path::Tiny;
 use Types::Standard -types;
