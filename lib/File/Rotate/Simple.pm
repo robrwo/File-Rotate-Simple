@@ -103,58 +103,26 @@ has file => (
     required => 1,
 );
 
-=head2 file_regexp
-
-The regular expression used to match files to rotate.
-
-=cut
-
-has file_regexp => (
-    is      => 'lazy',
-    isa     => RegexpRef,
-    default => sub {
-        my $self = shift;
-        my $base = quotemeta($self->file->basename);
-        qr/^${base}(?:[.]([1-9]\d*))?$/i;
-    },
-);
-
 =begin internal
 
-=head2 C<files>
+=head2 file_regexp
 
-This is an array reference of numbered backup files. It is used
-internally.
+This is an internal attribute that contains the regular expression
+used to match files to rotate.
 
 =end internal
 
 =cut
 
-has files => (
-    is        => 'lazy',
-    isa       => ArrayRef[ Maybe[InstanceOf['Path::Tiny']] ],
-    init_args => undef,
+has file_regexp => (
+    is       => 'lazy',
+    isa      => RegexpRef,
 );
 
-sub _build_files {
-    my $self = shift;
-
-    my @files;
-
-    my $re   = $self->file_regexp;
-    my $iter = $self->file->parent->iterator;
-
-    while (my $file = $iter->()) {
-
-        next unless $file->basename =~ $re;
-
-        my $index = $1;
-
-        $files[ $index || 0 ] = $file;
-
-    }
-
-    return \@files;
+sub _build_file_regexp {
+  my ($self) = @_;
+  my $base = quotemeta($self->file->basename);
+  qr/^${base}(?:[.]([1-9]\d*))?$/i;
 }
 
 =head1 METHODS
@@ -170,52 +138,159 @@ This can be called as a constructor.
 sub rotate {
     my $self = shift;
 
-  unless (ref $self) {
-      my %args = (@_ == 1) ? %{ $_[0] } : @_;
+    unless (ref $self) {
+        my %args = (@_ == 1) ? %{ $_[0] } : @_;
 
-      if (my $files = delete $args{files}) {
-          foreach my $file (@{$files}) {
-              $self->new( %args, file => $file )->rotate;
-          }
-          return;
-      }
+        if (my $files = delete $args{files}) {
+            foreach my $file (@{$files}) {
+                $self->new( %args, file => $file )->rotate;
+            }
+            return;
+        }
 
-      $self = $self->new(%args);
+        $self = $self->new(%args);
+    }
+
+    my $max   = $self->max;
+    my $age   = ($self->age)
+        ? time - ($self->age * 86_400)
+        : 0;
+
+    my @files = @{ $self->_build_files_to_rotate };
+
+    my $index = scalar( @files );
+
+    while ($index--) {
+
+        my $file = $files[$index] or next;
+
+        my $current = $file->{current};
+        my $rotated    = $file->{rotated};
+
+        unless (defined $rotated) {
+            $current->remove;
+            next;
+        }
+
+        if ($max && $index >= $max) {
+            $current->remove;
+            next;
+        }
+
+        if ($age && $current->stat->mtime < $age) {
+            $current->remove;
+            next;
+        }
+
+        $current->move($rotated);
+    }
+
   }
 
-  my @files = @{ $self->files };
-  my $index = scalar( @files );
+=begin internal
 
-  my $age   = ($self->age)
-      ? time - ($self->age * 86_400)
-      : 0;
+=head2 C<_build_files_to_rotate>
 
-  while ($index--) {
+This method builds a reverse-ordered list of files to rotate.
 
-      my $file = $files[$index] or next;
+It gathers a list of files to rotate using L</rotate_file> and
+L</file_regexp> and sorts them based on what the files will be
+renamed to.
 
-      if ($self->max && $index >= $self->max) {
-          $file->remove;
-          next;
-      }
+=cut
 
-      if ($age && $file->stat->mtime < $age) {
-          $file->remove;
-          next;
-      }
+sub _build_files_to_rotate {
+    my $self = shift;
 
-      my $next = $index + 1;
-      my $new = $file->stringify;
+    my $iter = $self->file->parent->iterator;
+    my %files;
+
+    while (my $current = $iter->()) {
+        my $rotated = $self->rotate_file( $current )
+            or next;
+        $files{ $current->stringify } = $rotated;
+    }
+
+    my $g = Graph->new;
+    foreach my $file (values %files) {
+        my $current = $file->{current};
+        if (my $rotated = $file->{rotated}) {
+            $g->add_edge( $current->stringify,
+                          $rotated->stringify );
+        } else {
+            $g->add_vertex( $current->stringify );
+        }
+    }
+
+    return [
+        grep { defined $_ }
+        map  { $files{$_} } $g->topological_sort( empty_if_cyclic => 1 )
+        ];
+
+}
+
+=head2 C<rotate_file>
+
+  my $info = $obj->rotate_file( $file );
+
+This is an internal method that determines whether a file is to be
+rotated, deleted or ignored.
+
+It's given a L<Path::Tiny> object as an argument and returns either
+C<undef> if the file is to be ignored, or a hash reference with the
+following keys:
+
+=over
+
+=item current
+
+The file to be rotated, same as the C<$file> argument.
+
+=item rotated
+
+Either a L<Path::Tiny> object of the new filename, or C<undef> if the
+file is to be deleted.
+
+This I<must> be unique, and there are no checks to prevent you from
+shooting yourself in the foot if it is not unique.
+
+=back
+
+=cut
+
+=end internal
+
+=cut
+
+sub rotate_file {
+  my ($self, $current) = @_;
+
+  my $re = $self->file_regexp;
+  if ($current->basename =~ $re) {
+
+      my $index = $1 || 0;
+      my $next  = $index + 1;
+      my $rotated = $current->stringify;
+
+      my $max = $self->max;
 
       if ($index) {
-          $new =~ s/[.]${index}$/.${next}/;
+          if (!$max || ($index < $max)) {
+              $rotated =~ s/[.]${index}$/.${next}/;
+          } else {
+              $rotated = undef;
+          }
       } else {
-          $new .= '.' . $next;
+          $rotated .= '.' . $next;
       }
 
-      $file->move($new);
+      return {
+          current => $current,
+          rotated => $rotated ? path($rotated) : undef,
+      };
+  } else {
+      return;
   }
-
 }
 
 =for readme continue

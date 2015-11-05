@@ -14,7 +14,13 @@ v0.1.4    2015-11-17 21:31:41+00:00 Europe/London
   - Added more example code
 
   [Enhancements]
-  - The file selection regexp is an attribute
+  - The file selection regexp is an attribute, and the file renaming
+    code is in a separate method that allows the behaviour to be
+    modified in a subclass.
+
+    The processing order of files is sorted by dependency order
+    (e.g. "foo.2" is renamed to "foo.3" before "foo.1" is renamed to
+    "foo.2"), so as to allow more kinds of file rotation schemes.
 
   [Incompatable Changes]
   - The default file selection regexp is case-insensitive, although
