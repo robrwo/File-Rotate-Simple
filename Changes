@@ -11,6 +11,8 @@ v0.1.4    2015-11-17 21:31:41+00:00 Europe/London
   [Documentation]
   - Added a SEE ALSO section with similar modules
 
+  - Added more example code
+
   [Enhancements]
   - The file selection regexp is an attribute
 

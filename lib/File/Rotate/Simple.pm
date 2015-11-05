@@ -87,7 +87,12 @@ The file to rotate. This can be a string or L<Path::Tiny> object.
 =head2 C<files>
 
 When L</rotate> is called as a constructor, you can specify an array
-reference of files to rotate.
+reference of files to rotate:
+
+  File::Rotate::Simple->rotate(
+     files => \@files,
+     ...
+  );
 
 =cut
 
