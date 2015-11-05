@@ -2,13 +2,14 @@ package File::Rotate::Simple;
 
 use Moo 1.001000;
 
+use Graph;
 use Path::Tiny;
 use Types::Standard -types;
 
 use namespace::autoclean;
 
 use version;
-$File::Rotate::Simple::VERSION = version->declare('v0.1.5');
+$File::Rotate::Simple::VERSION = version->declare('v0.2.0');
 
 =head1 NAME
 
