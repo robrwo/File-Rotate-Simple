@@ -32,6 +32,20 @@ are deleted.
 
 Note that files with the extension C<0> are ignored.
 
+=head1 SEE ALSO
+
+The following modules have similar functionality:
+
+=over
+
+=item * L<File::Rotate::Backup>
+
+=item * L<File::Write::Rotate>
+
+=back
+
+There are also several logging modueles that support log rotation.
+
 =head1 AUTHOR
 
 Robert Rothenberg, C<rrwo@cpan.org>
