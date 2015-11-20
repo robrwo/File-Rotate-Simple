@@ -182,6 +182,9 @@ sub rotate {
             next;
         }
 
+        die "Cannot move ${current} -> ${rotated}: file exists"
+          if $rotated->exists;
+
         $current->move($rotated);
     }
 
