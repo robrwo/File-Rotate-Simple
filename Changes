@@ -4,6 +4,8 @@ Revision history for File::Rotate::Simple
   [Documentation]
   - Added more example code
 
+  - Minor rewrites to clarify defaults.
+
   [Enhancements]
   - The file selection regexp is an attribute, and the file renaming
     code is in a separate method that allows the behaviour to be

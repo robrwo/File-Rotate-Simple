@@ -53,7 +53,7 @@ Note that files with the extension C<0> are ignored.
 
 The maximum age of files (in days).  Older files will be deleted.
 
-A value C<0> means there is no maximum age.
+A value C<0> (default) means there is no maximum age.
 
 =cut
 
@@ -68,7 +68,7 @@ has age => (
 The maximum number of files to keep.  Numbered files larger than this
 will be deleted.
 
-A value of C<0> means that there is no maximum number.
+A value of C<0> (default) means that there is no maximum number.
 
 Note that it does not track whether intermediate files are missing.
 
