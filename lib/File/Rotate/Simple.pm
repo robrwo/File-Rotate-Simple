@@ -235,7 +235,7 @@ L</file> and sorts them based on what the files will be renamed to.
 =cut
 
 sub _build_files_to_rotate {
-    my $self = shift;
+    my ($self) = @_;
 
     my %files;
 
