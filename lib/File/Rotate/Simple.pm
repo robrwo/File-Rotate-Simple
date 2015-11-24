@@ -150,11 +150,20 @@ has if_missing => (
     default => 0,
 );
 
+=head2 C<time>
+
+A L<Time::Piece> object corresponding to the time used for generating
+timestamped extensions in L</extension_format>.  It defaults to the
+current local time.
+
+Added in v0.2.0.
+
+=cut
+
 has time => (
-    is      => 'bare',
+    is      => 'lazy',
     isa     => InstanceOf['Time::Piece'],
     default => sub { localtime },
-    lazy    => 1,
     handles => { _strftime => 'strftime' },
 );
 
