@@ -155,7 +155,7 @@ has time => (
     isa     => InstanceOf['Time::Piece'],
     default => sub { localtime },
     lazy    => 1,
-    handles => [qw/ strftime /],
+    handles => { _strftime => 'strftime' },
 );
 
 =head1 METHODS
@@ -308,7 +308,7 @@ sub _rotated_name {
         $format =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/ge;
     }
 
-    return path( $self->file . $self->strftime($format) );
+    return path( $self->file . $self->_strftime($format) );
 }
 
 =for readme continue
