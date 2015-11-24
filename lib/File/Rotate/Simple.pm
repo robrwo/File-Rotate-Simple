@@ -266,8 +266,8 @@ sub _build_files_to_rotate {
                 rotated => (!$max || $num <= $max) ? $rotated : undef,
             };
         }
-        $file = $rotated;
 
+        $file = $rotated;
 
     }
 
