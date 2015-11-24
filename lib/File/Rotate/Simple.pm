@@ -241,11 +241,12 @@ sub _build_files_to_rotate {
 
     my $num = $self->start_num;
 
+    my $file = $self->_rotated_name( $num );
     if ($self->file->exists) {
 
         $files{ $self->file } = {
             current => $self->file,
-            rotated => $self->rotated_name( $self->file, $num ),
+            rotated => $file,
         };
 
     } else {
@@ -255,10 +256,9 @@ sub _build_files_to_rotate {
     }
 
     my $max  = $self->max;
-    my $file = $self->rotated_name( $self->file, $num );
     while ($file->exists || ($max && $num <= $max)) {
 
-        my $rotated = $self->rotated_name( $self->file, ++$num );
+        my $rotated = $self->_rotated_name( ++$num );
 
         if ($file->exists) {
             $files{ $file } = {
@@ -289,8 +289,18 @@ sub _build_files_to_rotate {
 
 }
 
-sub rotated_name {
-    my ($self, $file, $index) = @_;
+=begin internal
+
+=head2 C<_rotated_name>
+
+This is a utility method for generating rotated file names.
+
+=end internal
+
+=cut
+
+sub _rotated_name {
+    my ($self, $index) = @_;
 
     my $extension = $self->extension;
     {
@@ -298,7 +308,7 @@ sub rotated_name {
         $extension =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/ge;
     }
 
-    return path( $file . $self->strftime($extension) );
+    return path( $self->file . $self->strftime($extension) );
 }
 
 =for readme continue
