@@ -8,7 +8,7 @@ use Time::Piece;
 use Time::Seconds qw/ ONE_DAY /;
 use Types::Standard -types;
 
-#use namespace::autoclean;
+use namespace::autoclean;
 
 use version;
 $File::Rotate::Simple::VERSION = version->declare('v0.2.0');
