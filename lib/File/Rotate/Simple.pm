@@ -119,7 +119,7 @@ has start_num => (
     default => 1,
 );
 
-=head2 C<extension>
+=head2 C<extension_format>
 
 The extension to add when rotating. This is a string that is passed to
 POSIX C<strftime> with the following addition of the C<%#> code, which
@@ -129,7 +129,7 @@ Added in v0.2.0.
 
 =cut
 
-has extension => (
+has extension_format => (
     is      => 'ro',
     isa     => Str,
     default => '.%#',
@@ -302,13 +302,13 @@ This is a utility method for generating rotated file names.
 sub _rotated_name {
     my ($self, $index) = @_;
 
-    my $extension = $self->extension;
+    my $format = $self->extension_format;
     {
         no warnings 'uninitialized';
-        $extension =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/ge;
+        $format =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/ge;
     }
 
-    return path( $self->file . $self->strftime($extension) );
+    return path( $self->file . $self->strftime($format) );
 }
 
 =for readme continue
