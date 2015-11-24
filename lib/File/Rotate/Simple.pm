@@ -135,6 +135,29 @@ has extension_format => (
     default => '.%#',
 );
 
+=head2 C<replace_extension>
+
+If defined, it replaces the extension with the one specified by
+L</extension_format> rather than appending it.  Use this when you want
+to preserve the existing extension in a rotated backup, e.g.
+
+    my $r = File::Rotate::Simple->new(
+        file              => 'myapp.log',
+        extension_format  => '.%#.log',
+        replace_extension => '.log',
+    );
+
+will rotate the log as F<myapp.1.log>.
+
+Added in v0.2.0.
+
+=cut
+
+has replace_extension => (
+    is  => 'ro',
+    isa => Maybe[Str],
+);
+
 =head2 C<if_missing>
 
 When true, rotate the files even when L</file> is missing. False by default.
@@ -317,7 +340,22 @@ sub _rotated_name {
         $format =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/ge;
     }
 
-    return path( $self->file . $self->_strftime($format) );
+    my $file      = $self->file->stringify;
+    my $extension = $self->_strftime($format);
+    my $replace   = $self->replace_extension;
+
+    if (defined $replace) {
+
+        my $re = quotemeta($replace);
+        $file =~ s/${re}$/${extension}/;
+
+        return path($file);
+
+    } else {
+
+        return path( $file . $extension );
+
+    }
 }
 
 =for readme continue
