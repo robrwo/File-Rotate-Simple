@@ -4,9 +4,11 @@ use Moo 1.001000;
 
 use Graph;
 use Path::Tiny;
+use Time::Piece;
+use Time::Seconds qw/ ONE_DAY /;
 use Types::Standard -types;
 
-use namespace::autoclean;
+#use namespace::autoclean;
 
 use version;
 $File::Rotate::Simple::VERSION = version->declare('v0.2.0');
@@ -103,27 +105,58 @@ has file => (
     required => 1,
 );
 
-=begin internal
+=head2 C<start_num>
 
-=head2 file_regexp
+The starting number to use when rotating files. Defaults to C<1>.
 
-This is an internal attribute that contains the regular expression
-used to match files to rotate.
-
-=end internal
+Added in v0.2.0.
 
 =cut
 
-has file_regexp => (
-    is       => 'lazy',
-    isa      => RegexpRef,
+has start_num => (
+    is      => 'ro',
+    isa     => Int,
+    default => 1,
 );
 
-sub _build_file_regexp {
-  my ($self) = @_;
-  my $base = quotemeta($self->file->basename);
-  qr/^${base}(?:[.]([1-9]\d*))?$/i;
-}
+=head2 C<extension>
+
+The extension to add when rotating. This is a string that is passed to
+POSIX C<strftime> with the following addition of the C<%#> code, which
+corresponds to the rotation number of the file.
+
+Added in v0.2.0.
+
+=cut
+
+has extension => (
+    is      => 'ro',
+    isa     => Str,
+    default => '.%#',
+);
+
+=head2 C<if_missing>
+
+When true, rotate the files even when L</file> is missing. False by default.
+
+Added in v0.2.0. Note that the default behaviour before this version
+was to always rotate files.
+
+=cut
+
+has if_missing => (
+    is      => 'ro',
+    isa     => Bool,
+    default => 0,
+);
+
+has time => (
+    is      => 'bare',
+    isa     => InstanceOf['Time::Piece'],
+    default => sub { localtime },
+    lazy    => 1,
+    handles => [qw/ strftime /],
+);
 
 =head1 METHODS
 
@@ -153,7 +186,7 @@ sub rotate {
 
     my $max   = $self->max;
     my $age   = ($self->age)
-        ? time - ($self->age * 86_400)
+        ? time - ($self->age * ONE_DAY)
         : 0;
 
     my @files = @{ $self->_build_files_to_rotate };
@@ -197,21 +230,45 @@ sub rotate {
 This method builds a reverse-ordered list of files to rotate.
 
 It gathers a list of files to rotate using L</rotate_file> and
-L</file_regexp> and sorts them based on what the files will be
-renamed to.
+L</file> and sorts them based on what the files will be renamed to.
 
 =cut
 
 sub _build_files_to_rotate {
     my $self = shift;
 
-    my $iter = $self->file->parent->iterator;
     my %files;
 
-    while (my $current = $iter->()) {
-        my $rotated = $self->rotate_file( $current )
-            or next;
-        $files{ $current->stringify } = $rotated;
+    my $num = $self->start_num;
+
+    if ($self->file->exists) {
+
+        $files{ $self->file } = {
+            current => $self->file,
+            rotated => $self->rotated_name( $self->file, $num ),
+        };
+
+    } else {
+
+        return [ ] unless $self->if_missing;
+
+    }
+
+    my $max  = $self->max;
+    my $file = $self->rotated_name( $self->file, $num );
+    while ($file->exists || ($max && $num <= $max)) {
+
+        my $rotated = $self->rotated_name( $self->file, ++$num );
+
+        if ($file->exists) {
+            $files{ $file } = {
+                current => $file,
+                rotated => (!$max || $num <= $max) ? $rotated : undef,
+            };
+        }
+        $file = $rotated;
+
+
     }
 
     my $g = Graph->new;
@@ -232,68 +289,16 @@ sub _build_files_to_rotate {
 
 }
 
-=head2 C<rotate_file>
+sub rotated_name {
+    my ($self, $file, $index) = @_;
 
-  my $info = $obj->rotate_file( $file );
+    my $extension = $self->extension;
+    {
+        no warnings 'uninitialized';
+        $extension =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/ge;
+    }
 
-This is an internal method that determines whether a file is to be
-rotated, deleted or ignored.
-
-It's given a L<Path::Tiny> object as an argument and returns either
-C<undef> if the file is to be ignored, or a hash reference with the
-following keys:
-
-=over
-
-=item current
-
-The file to be rotated, same as the C<$file> argument.
-
-=item rotated
-
-Either a L<Path::Tiny> object of the new filename, or C<undef> if the
-file is to be deleted.
-
-This I<must> be unique, and there are no checks to prevent you from
-shooting yourself in the foot if it is not unique.
-
-=back
-
-=cut
-
-=end internal
-
-=cut
-
-sub rotate_file {
-  my ($self, $current) = @_;
-
-  my $re = $self->file_regexp;
-  if ($current->basename =~ $re) {
-
-      my $index = $1 || 0;
-      my $next  = $index + 1;
-      my $rotated = $current->stringify;
-
-      my $max = $self->max;
-
-      if ($index) {
-          if (!$max || ($index < $max)) {
-              $rotated =~ s/[.]${index}$/.${next}/;
-          } else {
-              $rotated = undef;
-          }
-      } else {
-          $rotated .= '.' . $next;
-      }
-
-      return {
-          current => $current,
-          rotated => $rotated ? path($rotated) : undef,
-      };
-  } else {
-      return;
-  }
+    return path( $file . $self->strftime($extension) );
 }
 
 =for readme continue
