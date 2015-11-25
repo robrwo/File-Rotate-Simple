@@ -13,6 +13,9 @@ use namespace::autoclean;
 use version;
 $File::Rotate::Simple::VERSION = version->declare('v0.2.0');
 
+# RECOMMEND PREREQ: Class::Load::XS
+# RECOMMEND PREREQ: Type::Tiny::XS
+
 =head1 NAME
 
 File::Rotate::Simple - no-frills file rotation
