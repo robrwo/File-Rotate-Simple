@@ -332,9 +332,12 @@ sub _build_files_to_rotate {
         }
     }
 
+    die "dependency chain is cyclic"
+      if $g->has_a_cycle;
+
     return [
         grep { defined $_ }
-        map  { $files{$_} } $g->topological_sort( empty_if_cyclic => 1 )
+        map  { $files{$_} } $g->topological_sort()
         ];
 
 }
