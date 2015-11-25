@@ -366,7 +366,7 @@ sub _rotated_name {
     }
 
     my $file      = $self->file->stringify;
-    my $extension = $self->_strftime($format);
+    my $extension = ($format =~ /\%/) ? $self->_strftime($format) : $format;
     my $replace   = $self->replace_extension;
 
     if (defined $replace) {
