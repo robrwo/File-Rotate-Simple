@@ -122,8 +122,8 @@ has start_num => (
 =head2 C<extension_format>
 
 The extension to add when rotating. This is a string that is passed to
-POSIX C<strftime> with the following addition of the C<%#> code, which
-corresponds to the rotation number of the file.
+L<Time::Piece/strftime> with the following addition of the C<%#> code,
+which corresponds to the rotation number of the file.
 
 Added in v0.2.0.
 
