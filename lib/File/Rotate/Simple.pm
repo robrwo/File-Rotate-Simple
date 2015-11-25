@@ -203,7 +203,10 @@ has time => (
     is      => 'lazy',
     isa     => InstanceOf[qw/ Time::Piece Time::Moment DateTime /],
     default => sub { load_class('Time::Piece'); Time::Piece::localtime() },
-    handles => { _strftime => 'strftime' },
+    handles => {
+        _strftime => 'strftime',
+        _epoch    => 'epoch',
+    },
 );
 
 =head1 METHODS
@@ -234,7 +237,7 @@ sub rotate {
 
     my $max   = $self->max;
     my $age   = ($self->age)
-        ? time - ($self->age * ONE_DAY)
+        ? $self->_epoch - ($self->age * ONE_DAY)
         : 0;
 
     my @files = @{ $self->_build_files_to_rotate };
