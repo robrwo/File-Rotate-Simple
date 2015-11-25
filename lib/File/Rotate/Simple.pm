@@ -196,13 +196,22 @@ constructor, e.g.
 
 L<Time::Moment> and L<DateTime> objects can also be given.
 
+Unlike other attributes, L</time> is read-write, so that it can be
+updated between calls to L</rotate>:
+
+    use Time::Piece;
+
+    $r->time( localtime );
+    $r->rotate;
+
 Added in v0.2.0.
 
 =cut
 
 has time => (
-    is      => 'lazy',
+    is      => 'rw',
     isa     => InstanceOf[qw/ Time::Piece Time::Moment DateTime /],
+    lazy    => 1,
     default => sub { load_class('Time::Piece'); Time::Piece::localtime() },
     handles => {
         _strftime => 'strftime',
