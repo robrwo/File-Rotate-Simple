@@ -292,6 +292,8 @@ sub _build_files_to_rotate {
 
         my $rotated = $self->_rotated_name( ++$num );
 
+        last if $rotated eq $file;
+
         if ($file->exists) {
             $files{ $file } = {
                 current => $file,
