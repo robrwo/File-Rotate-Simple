@@ -24,6 +24,9 @@ Revision history for File::Rotate::Simple
   - By default, files will not be rotated if the file is missing. This
     can be changed by setting "if_missing" to true.
 
+  [Other Changes]
+  - META.yml includes recommended XS modules.
+
 v0.1.5    2015-11-20 00:42:35+00:00 Europe/London
   [Bug Fixes]
   - Removed backup files from the distribution
