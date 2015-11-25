@@ -175,9 +175,22 @@ has if_missing => (
 
 =head2 C<time>
 
-A L<Time::Piece> object corresponding to the time used for generating
-timestamped extensions in L</extension_format>.  It defaults to the
-current local time.
+A time object corresponding to the time used for generating
+timestamped extensions in L</extension_format>.  It defaults to a
+L<Time::Piece> object with the current local time.
+
+You can specify an alternative time (including time zone) in the
+constructor, e.g.
+
+    use Time::Piece;
+
+    my $r = File::Rotate::Simple->new(
+        file              => 'myapp.log',
+        time              => gmtime(),
+        extension_format  => '.%Y%m%d',
+    );
+
+L<Time::Moment> and L<DateTime> objects can also be given.
 
 Added in v0.2.0.
 
@@ -185,7 +198,7 @@ Added in v0.2.0.
 
 has time => (
     is      => 'lazy',
-    isa     => InstanceOf['Time::Piece'],
+    isa     => InstanceOf[qw/ Time::Piece Time::Moment DateTime /],
     default => sub { localtime },
     handles => { _strftime => 'strftime' },
 );

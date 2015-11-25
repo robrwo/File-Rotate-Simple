@@ -85,6 +85,46 @@ subtest '_rotated_name' => sub {
             '_rotated_name(9) with date format';
     }
 
+  SKIP: {
+
+      eval 'use Time::Moment; 1;'
+          or skip 'Time::Moment not installed' => 2;
+
+      my $time = Time::Moment->now;
+
+      my $r = File::Rotate::Simple->new(
+            file             => 'test.dat',
+            extension_format => '.%Y%m%d',
+            time             => $time,
+      );
+
+      isa_ok $r->time, 'Time::Moment';
+
+      is $r->_rotated_name(1) =>
+          path('test.dat' . $time->strftime($r->extension_format)),
+          '_rotated_name(1) with Time::Moment date';
+    }
+
+  SKIP: {
+
+      eval 'use DateTime; 1;'
+          or skip 'DateTime not installed' => 2;
+
+      my $time = DateTime->now;
+
+      my $r = File::Rotate::Simple->new(
+          file             => 'test.dat',
+          extension_format => '.%Y%m%d',
+          time             => $time,
+      );
+
+      isa_ok $r->time => 'DateTime';
+
+      is $r->_rotated_name(1) =>
+          path('test.dat' . $time->strftime($r->extension_format)),
+          '_rotated_name(1) with DateTime date';
+    }
+
 };
 
 my $dir  = Path::Tiny->tempdir;
