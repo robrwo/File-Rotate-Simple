@@ -56,7 +56,8 @@ Note that files with the extension C<0> are ignored.
 
 =head2 C<age>
 
-The maximum age of files (in days).  Older files will be deleted.
+The maximum age of files (in days), relative to the L</time>
+attribute.  Older files will be deleted.
 
 A value C<0> (default) means there is no maximum age.
 
