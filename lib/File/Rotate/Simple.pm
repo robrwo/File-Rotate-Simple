@@ -286,12 +286,15 @@ sub rotate {
 
 =begin internal
 
+=head1 INTERNAL METHODS
+
 =head2 C<_build_files_to_rotate>
 
 This method builds a reverse-ordered list of files to rotate.
 
-It gathers a list of files to rotate using L</rotate_file> and
-L</file> and sorts them based on what the files will be renamed to.
+It gathers a list of files to rotate using L</_rotated_name> and
+L</file> and topoligically sorts them based on what the files will be
+renamed to.
 
 =cut
 
@@ -334,6 +337,10 @@ sub _build_files_to_rotate {
 
     }
 
+    # Using a topoligical sort is probably overkill, but it allows us
+    # to use more complicated filename rotation schemes in a subclass
+    # without having to worry about file order.
+
     my $g = Graph->new;
     foreach my $file (values %files) {
         my $current = $file->{current};
@@ -355,13 +362,21 @@ sub _build_files_to_rotate {
 
 }
 
-=begin internal
-
 =head2 C<_rotated_name>
 
-This is a utility method for generating rotated file names.
+  my $rotated = $r->_rotated_name( $index );
 
-=end internal
+This method generates a L<Path::Tiny> object of the rotated filename
+from the L</file>, L</extension_format>, and L</replace_extension>
+attributes, using the C<$index> (a positive integer).
+
+For example, given the default values and a L</file> called
+F</var/log/myapp.log> and C<$index = 12>, it will return the file
+F</var/log/myapp.log.12>.
+
+If the L</extension_format> refers to formats other than C<%#> (for
+the C<$index>), then it will use the L</time> to generate the new file
+name.
 
 =cut
 
@@ -391,6 +406,8 @@ sub _rotated_name {
 
     }
 }
+
+=end internal
 
 =for readme continue
 
