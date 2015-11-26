@@ -6,7 +6,7 @@ use warnings;
 use Test::More 0.99;
 
 use Time::Piece;
-use Path::Tiny;
+use Path::Tiny 0.018;
 
 use_ok 'File::Rotate::Simple';
 
