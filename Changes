@@ -2,9 +2,7 @@ Revision history for File::Rotate::Simple
 
 {{$NEXT}}
   [Documentation]
-  - Added more example code
-
-  - Minor rewrites to clarify defaults.
+  - Improved documentation of internal methods.
 
   [Enhancements]
   - Added "start_num" attribute for specifying the starting number.
