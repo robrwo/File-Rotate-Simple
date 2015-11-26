@@ -9,6 +9,8 @@ Revision history for File::Rotate::Simple
 
   - Added the "if_missing" attribute to rotate if the file is missing.
 
+  - Added "touch" attribute to touch the file after rotating.
+
   - The file rotation algorithm has been completely rewritten to be more
     flexible in naming.
 
