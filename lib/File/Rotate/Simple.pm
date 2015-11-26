@@ -4,7 +4,7 @@ use Moo 1.001000;
 
 use Class::Load qw/ load_class /;
 use Graph;
-use Path::Tiny;
+use Path::Tiny 0.015;
 use Time::Seconds qw/ ONE_DAY /;
 use Types::Standard -types;
 
