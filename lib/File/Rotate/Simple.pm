@@ -295,6 +295,8 @@ sub rotate {
     }
 
     $self->file->touch if $self->touch;
+
+    # TODO: chmod/chown arguments
 }
 
 =begin internal
