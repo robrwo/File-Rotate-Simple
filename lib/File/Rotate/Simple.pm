@@ -177,6 +177,18 @@ has if_missing => (
     default => 0,
 );
 
+=head2 C<touch>
+
+Touch L</file> after rotating.
+
+=cut
+
+has touch => (
+    is      => 'ro',
+    isa     => Bool,
+    default => 0,
+);
+
 =head2 C<time>
 
 A time object corresponding to the time used for generating
@@ -282,7 +294,8 @@ sub rotate {
         $current->move($rotated);
     }
 
-  }
+    $self->file->touch if $self->touch;
+}
 
 =begin internal
 
