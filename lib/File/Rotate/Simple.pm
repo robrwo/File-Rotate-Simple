@@ -4,6 +4,7 @@ use Moo 1.001000;
 
 use Class::Load qw/ load_class /;
 use Graph;
+use List::Util 1.35, qw/ first /;
 use Path::Tiny 0.015;
 use Time::Seconds qw/ ONE_DAY /;
 use Types::Standard -types;
@@ -365,6 +366,16 @@ sub _build_files_to_rotate {
         } else {
             $g->add_vertex( $current->stringify );
         }
+    }
+
+    # Now check that there is not more than one file being rotated to
+    # the same name.
+
+    my %rotated;
+    $rotated{$_->[1]}++ for ($g->edges);
+
+    if (my $duplicate = first { $rotated{$_} > 1 } keys %rotated) {
+        die "multiple files are rotated to '${duplicate}'";
     }
 
     die "dependency chain is cyclic"
