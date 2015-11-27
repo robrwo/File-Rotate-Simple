@@ -1,9 +1,6 @@
 #!/usr/bin/env perl
 
-use strict;
-use warnings;
-
-use Test::More 0.99;
+use Test::Most;
 
 use Time::Piece;
 use Path::Tiny;
