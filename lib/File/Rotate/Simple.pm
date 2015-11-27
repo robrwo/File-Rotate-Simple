@@ -2,9 +2,9 @@ package File::Rotate::Simple;
 
 use Moo 1.001000;
 
-use Class::Load qw/ load_class /;
 use Graph;
 use List::Util 1.35, qw/ first /;
+use Module::Runtime qw/ require_module /;
 use Path::Tiny 0.015;
 use Time::Seconds qw/ ONE_DAY /;
 use Types::Standard -types;
@@ -225,7 +225,7 @@ has time => (
     is      => 'rw',
     isa     => InstanceOf[qw/ Time::Piece Time::Moment DateTime /],
     lazy    => 1,
-    default => sub { load_class('Time::Piece'); Time::Piece::localtime() },
+    default => sub { require_module('Time::Piece'); Time::Piece::localtime() },
     handles => {
         _strftime => 'strftime',
         _epoch    => 'epoch',
