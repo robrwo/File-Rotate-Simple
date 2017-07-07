@@ -8,6 +8,7 @@ Revision history for File::Rotate::Simple
   - Added "start_num" attribute for specifying the starting number.
 
   - Added the "if_missing" attribute to rotate if the file is missing.
+    (Enabled by default for backwards compatability.)
 
   - Added "touch" attribute to touch the file after rotating.
 
@@ -20,9 +21,6 @@ Revision history for File::Rotate::Simple
 
   [Incompatable Changes]
   - Rotation numbers above the maximum may not be deleted if there are gaps.
-
-  - By default, files will not be rotated if the file is missing. This
-    can be changed by setting "if_missing" to true.
 
   [Other Changes]
   - META.yml includes recommended XS modules.
