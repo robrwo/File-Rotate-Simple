@@ -165,17 +165,17 @@ has replace_extension => (
 
 =head2 C<if_missing>
 
-When true, rotate the files even when L</file> is missing. False by default.
+When true, rotate the files even when L</file> is missing. True by
+default, for backwards compatability.
 
-Added in v0.2.0. Note that the default behaviour before this version
-was to always rotate files.
+Added in v0.2.0.
 
 =cut
 
 has if_missing => (
     is      => 'ro',
     isa     => Bool,
-    default => 0,
+    default => 1,
 );
 
 =head2 C<touch>
