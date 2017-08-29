@@ -18,7 +18,7 @@ isa_ok $r => 'File::Rotate::Simple';
 
 subtest 'default accessors' => sub {
     is $r->file       => $file, 'file';
-    is $r->if_missing => 0, 'if_missing';
+    is $r->if_missing => 1, 'if_missing';
     is $r->max        => 0, 'max';
     is $r->age        => 0, 'age';
     is $r->extension_format => '.%#', 'extension_format';
@@ -26,43 +26,103 @@ subtest 'default accessors' => sub {
     is $r->touch      => 0, 'touch';
 };
 
-my @todo = (1..5);
-my @done;
+my $last  = $file;
 
-while (my $index = shift @todo) {
+
+subtest "rotate with if_missing true and file not touched" => sub {
+
+    my $max = 5;
 
     $file->touch;
 
-    subtest 'expected state of pre-rotated files' => sub {
+    exist( $file );
 
-        ok $file->exists, "${file} exists";
+    foreach my $index (1..$max) {
 
-        foreach ($index, @todo) {
-            my $path = path($file->parent, $base . '.' . $_);
-            ok !$path->exists, "${path} does not exist";
+        diag_exist( $r, $max );
+
+        my $rotated = path( $file . '.' . $index );
+
+        not_exist( $rotated );
+
+        note "rotate";
+
+        $r->rotate;
+
+        diag_exist( $r, $max );
+
+        if ($index <= 2) {
+
+            not_exist( $last );
+
+            $last = $rotated;
+
+            foreach my $i (0..$max) {
+
+                if ($i == $index) {
+                    exist( $r->_rotated_name( $i ) );
+                }
+                else {
+                    not_exist( $r->_rotated_name( $i ) );
+                }
+
+            }
+            exist( $rotated );
+
         }
-    };
+        else {
 
-    my $files = $r->_build_files_to_rotate;
-    is scalar(@$files) => 1 + scalar(@done), 'number of files to rotate';
+            foreach my $i (0..$max) {
 
-    $r->rotate;
+                if ($i == 2) {
+                    exist( $r->_rotated_name( $i ) );
+                }
+                else {
+                    not_exist( $r->_rotated_name( $i ) );
+                }
 
-    push @done, $index;
+            }
 
-    subtest 'expected state of post-rotated files' => sub {
-
-        ok !$file->exists, "${file} does not exist";
-
-        foreach (@done) {
-            my $path = path($file->parent, $base . '.' . $_);
-            ok $path->exists, "${path} exists";
         }
 
-    };
+    }
 
-    is_deeply $r->_build_files_to_rotate => [], 'no files to rotate';
+
 };
 
+
+sub exist {
+    my $file = path( shift );
+    my $desc = "${file} exists";
+    if (my $comment = shift) {
+        $desc .= " (${comment})";
+    }
+    ok $file->exists, $desc;
+}
+
+sub not_exist {
+    my $file = path( shift );
+    my $desc = "${file} missing";
+    if (my $comment = shift) {
+        $desc .= " (${comment})";
+    }
+    ok !$file->exists, $desc;
+}
+
+sub diag_exist {
+    my $obj = shift;
+    my $index = shift;
+
+    foreach my $sindex (0..$index) {
+
+        my $sfile = $obj->_rotated_name($sindex);
+        if ($sfile->exists) {
+            note "${sfile} exists";
+        }
+
+    }
+
+
+}
 
 done_testing;

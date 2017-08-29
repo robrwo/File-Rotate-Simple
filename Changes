@@ -29,6 +29,8 @@ Revision history for File::Rotate::Simple
 
   - Added META.json to the distribution.
 
+  - Updated tests appropriately.
+
 v0.1.5    2015-11-20 00:42:35+00:00 Europe/London
   [Bug Fixes]
   - Removed backup files from the distribution
