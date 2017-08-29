@@ -1,6 +1,7 @@
 package File::Rotate::Simple;
 
 use Moo 1.001000;
+extends 'Exporter';
 
 use Graph;
 use List::Util 1.35, qw/ first /;
@@ -17,13 +18,28 @@ $File::Rotate::Simple::VERSION = version->declare('v0.2.0');
 # RECOMMEND PREREQ: Class::Load::XS
 # RECOMMEND PREREQ: Type::Tiny::XS
 
+our @EXPORT_OK = qw/ rotate_files /;
+
 =head1 NAME
 
 File::Rotate::Simple - no-frills file rotation
 
 =head1 SYNOPSIS
 
-  use File::Rotate::Simple;
+  use File::Rotate::Simple qw/ rotate_files /;
+
+  rotate_files(
+      file => '/foo/bar/backup.tar.gz',
+      age  => 7,
+      max  => 30,
+  );
+
+  rotate_files(
+      files => [ qw{ /var/log/foo.log /var/log/bar.log } ],
+      max   => 7,
+  );
+
+or the legacy interface:
 
   File::Rotate::Simple->rotate(
       file => '/foo/bar/backup.tar.gz',
@@ -31,10 +47,16 @@ File::Rotate::Simple - no-frills file rotation
       max  => 30,
   );
 
-  File::Rotate::Simple->rotate(
-      files => [ qw{ /var/log/foo.log /var/log/bar.log } ],
-      max   => 7,
+or the object-oriented interface:
+
+  my $r = File::Rotate::Simple->new(
+      file => '/foo/bar/backup.tar.gz',
+      age  => 7,
+      max  => 30,
   );
+
+  $r->rotate;
+
 
 =head1 DESCRIPTION
 
@@ -434,6 +456,30 @@ sub _rotated_name {
 }
 
 =end internal
+
+=head1 EXPORTS
+
+None by default. All exports must be made manually.
+
+=head2 C<rotate_files>
+
+This is an optionally exported function for rotating files.
+
+  use File::Rotate::Simple qw/ rotate_files /;
+
+  rotate_files(
+      file => '/foo/bar/backup.tar.gz',
+      age  => 7,
+      max  => 30,
+  );
+
+Added in v0.2.0.
+
+=cut
+
+sub rotate_files {
+  __PACKAGE__->rotate( @_ );
+}
 
 =for readme continue
 

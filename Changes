@@ -5,6 +5,8 @@ Revision history for File::Rotate::Simple
   - Improved documentation of internal methods.
 
   [Enhancements]
+  - Added optional export "rotate_files" to provide a functional interface.
+
   - Added "start_num" attribute for specifying the starting number.
 
   - Added the "if_missing" attribute to rotate if the file is missing.
