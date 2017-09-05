@@ -7,6 +7,7 @@ use Graph;
 use List::Util 1.35, qw/ first /;
 use Module::Runtime qw/ require_module /;
 use Path::Tiny 0.015;
+use Ref::Util qw/ is_blessed_ref /;
 use Time::Seconds qw/ ONE_DAY /;
 use Types::Standard -types;
 
@@ -16,6 +17,7 @@ use version;
 $File::Rotate::Simple::VERSION = version->declare('v0.2.0');
 
 # RECOMMEND PREREQ: Class::Load::XS
+# RECOMMEND PREREQ: Ref::Util::XS
 # RECOMMEND PREREQ: Type::Tiny::XS
 
 our @EXPORT_OK = qw/ rotate_files /;
@@ -267,7 +269,7 @@ This can be called as a constructor.
 sub rotate {
     my $self = shift;
 
-    unless (ref $self) {
+    unless (is_blessed_ref $self) {
         my %args = (@_ == 1) ? %{ $_[0] } : @_;
 
         if (my $files = delete $args{files}) {
