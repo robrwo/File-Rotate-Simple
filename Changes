@@ -1,6 +1,9 @@
 Revision history for File::Rotate::Simple
 
 {{$NEXT}}
+  - Fixed broken prerequisit declarations.
+
+v0.2.0    2017-12-04 17:35:19+00:00 Europe/London
   [Documentation]
   - Improved documentation of internal methods.
 
