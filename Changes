@@ -1,6 +1,6 @@
 Revision history for File::Rotate::Simple
 
-{{$NEXT}}
+v0.2.2    2017-12-10 22:39:20+00:00 Europe/London
   - Fixed broken prerequisit declarations (Mohammad S Anwar).
 
   - Updated copyright year in POD.
