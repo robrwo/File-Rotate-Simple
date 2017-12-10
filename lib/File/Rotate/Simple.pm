@@ -14,7 +14,7 @@ use Types::Standard -types;
 use namespace::autoclean;
 
 use version;
-$File::Rotate::Simple::VERSION = version->declare('v0.2.1');
+$File::Rotate::Simple::VERSION = version->declare('v0.2.2');
 
 # RECOMMEND PREREQ: Class::Load::XS
 # RECOMMEND PREREQ: Ref::Util::XS
