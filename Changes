@@ -1,5 +1,8 @@
 Revision history for File::Rotate::Simple
 
+{{$NEXT}}
+  - Fixed broken prerequisit declarations (Mohammad S Anwar).
+
 v0.2.1    2017-12-08 17:24:48+00:00 Europe/London
   - Fixed broken prerequisit declarations.
 
