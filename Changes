@@ -4,6 +4,12 @@ Revision history for File::Rotate::Simple
   [Documentation]
   - Fixed typo in Changes.
 
+  - Renamed README.pod to README.md.
+
+  [Toolchain]
+  - Updated dist.ini to use Pod::Weaver and generate cpanfile, as
+    well as remove unnecessary prerequisites.
+
 v0.2.2    2017-12-10 22:39:20+00:00 Europe/London
   - Fixed broken prerequisite declarations (Mohammad S Anwar).
 
