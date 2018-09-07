@@ -4,7 +4,7 @@ use Moo 1.001000;
 extends 'Exporter';
 
 use Graph;
-use List::Util 1.35, qw/ first /;
+use List::Util 1.43, qw/ first /;
 use Module::Runtime qw/ require_module /;
 use Path::Tiny 0.015;
 use Ref::Util qw/ is_blessed_ref /;
