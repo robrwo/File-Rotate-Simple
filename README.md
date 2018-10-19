@@ -4,7 +4,7 @@ File::Rotate::Simple - no-frills file rotation
 
 # VERSION
 
-version v0.2.4
+version v0.2.5
 
 # SYNOPSIS
 
