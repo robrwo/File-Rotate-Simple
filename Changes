@@ -4,6 +4,9 @@ Revision history for File::Rotate::Simple
   [Documentation]
   - Added INSTALL file to the distribution.
 
+  [Toolchain]
+  - Tweaks to dist.ini for simplifying build.
+
 v0.2.4    2018-09-07 13:56:03+01:00 Europe/London
   [Bug Fixes]
   - Explicitly require List::Util v1.43.
