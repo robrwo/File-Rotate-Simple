@@ -127,7 +127,7 @@ reference of files to rotate:
 has file => (
     is       => 'ro',
     isa      => InstanceOf['Path::Tiny'],
-    coerce   => sub { path(shift) },
+    coerce   => \&path,
     required => 1,
 );
 
