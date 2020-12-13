@@ -10,6 +10,7 @@ requires "Ref::Util" => "0";
 requires "Time::Seconds" => "0";
 requires "Types::Standard" => "0";
 requires "namespace::autoclean" => "0";
+requires "perl" => "v5.8.8";
 recommends "Class::Load::XS" => "0";
 recommends "Ref::Util::XS" => "0";
 recommends "Type::Tiny::XS" => "0";

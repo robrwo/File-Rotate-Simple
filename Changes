@@ -14,6 +14,8 @@ Revision history for File::Rotate::Simple
   [Other]
   - Minor code improvements.
 
+  - Explicitly declare Perl v5.8 as the minimum version.
+
 v0.2.4    2018-09-07 13:56:03+01:00 Europe/London
   [Bug Fixes]
   - Explicitly require List::Util v1.43.

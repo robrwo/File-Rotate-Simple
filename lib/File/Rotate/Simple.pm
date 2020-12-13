@@ -1,5 +1,7 @@
 package File::Rotate::Simple;
 
+use v5.8.8;
+
 use Moo 1.001000;
 extends 'Exporter';
 
