@@ -7,6 +7,8 @@ Revision history for File::Rotate::Simple
   [Toolchain]
   - Tweaks to dist.ini for simplifying build.
 
+  - Remove use of Travis-CI.
+
   [Other]
   - Minor code improvements.
 
