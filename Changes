@@ -4,6 +4,8 @@ Revision history for File::Rotate::Simple
   [Documentation]
   - Added INSTALL file to the distribution.
 
+  - Updated copyright year.
+
   [Toolchain]
   - Tweaks to dist.ini for simplifying build.
 
