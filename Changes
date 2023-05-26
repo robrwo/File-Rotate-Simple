@@ -1,6 +1,11 @@
 Revision history for File::Rotate::Simple
 
 {{$NEXT}}
+  [Incompatible Changes]
+  - Bump minimum version of Perl to v5.14.
+
+  [Documentation]
+  - Documented the Perl version support policy.
 
 v0.2.5    2020-12-13 11:50:21+00:00 Europe/London
   [Documentation]

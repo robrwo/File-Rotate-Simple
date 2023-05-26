@@ -1,6 +1,6 @@
 package File::Rotate::Simple;
 
-use v5.8.8;
+use v5.14;
 
 use Moo 1.001000;
 extends 'Exporter';
@@ -435,7 +435,7 @@ sub _rotated_name {
     my $format = $self->extension_format;
     {
         no warnings 'uninitialized';
-        $format =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/ge;
+        $format =~ s/\%(\d+)*#/sprintf("\%0$1d", $index)/gea;
     }
 
     my $file      = $self->file->stringify;
@@ -445,9 +445,7 @@ sub _rotated_name {
     if (defined $replace) {
 
         my $re = quotemeta($replace);
-        $file =~ s/${re}$/${extension}/;
-
-        return path($file);
+        return path($file =~ s/${re}$/${extension}/r );
 
     } else {
 
@@ -483,6 +481,17 @@ sub rotate_files {
 }
 
 =for readme continue
+
+=head1 SUPPORT FOR OLDER PERL VERSIONS
+
+Since v0.3.0, the this module requires Perl v5.14 or later.
+
+Future releases may only support Perl versions released in the last ten years.
+
+If you need this module on Perl v5.8, please use one of the v0.2.x
+versions of this module.  Significant bug or security fixes may be
+backported to those versions.
+
 
 =head1 SEE ALSO
 
