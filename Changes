@@ -7,6 +7,8 @@ Revision history for File::Rotate::Simple
   [Documentation]
   - Documented the Perl version support policy.
 
+  - Bump copyright year.
+
 v0.2.5    2020-12-13 11:50:21+00:00 Europe/London
   [Documentation]
   - Added INSTALL file to the distribution.
