@@ -11,6 +11,9 @@ Revision history for File::Rotate::Simple
 
   - Fixed encoding of links in README.
 
+  [Toolchain]
+  - Update MANIFEST.SKIP rules.
+
 v0.2.5    2020-12-13 11:50:21+00:00 Europe/London
   [Documentation]
   - Added INSTALL file to the distribution.
