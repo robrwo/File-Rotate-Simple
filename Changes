@@ -3,7 +3,6 @@ Revision history for File::Rotate::Simple
 {{$NEXT}}
 
 v0.4.1    2026-08-07 17:18:51+01:00 Europe/London
-
   [Bug Fixs]
   - Fixed bug when older rotated files are dangling symlinks.
 
