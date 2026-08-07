@@ -2,6 +2,9 @@ Revision history for File::Rotate::Simple
 
 {{$NEXT}}
 
+  [Bug Fixs]
+  - Fixed bug when older rotated files are dangling symlinks.
+
 v0.4.0    2026-08-07 15:40:41+01:00 Europe/London
   [Enhancements]
   - DateTime::Lite and DateTime::Tiny objects can be given for the time attribute.

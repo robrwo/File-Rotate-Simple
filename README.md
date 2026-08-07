@@ -58,25 +58,10 @@ Note that files with the extension `0` are ignored.
 
 # RECENT CHANGES
 
-Changes for version v0.4.0 (2026-08-07)
+Changes for version v0.4.1 (2026-08-07)
 
-- Enhancements
-    - DateTime::Lite and DateTime::Tiny objects can be given for the time attribute.
-- Security
-    - If the log file is a dangling link, then it will be rotated without touching the destination (CVE-2026-17435).
-- Documentation
-    - Updated author email address.
-    - Update copyright year.
-    - Fixed link in SOURCE.
-    - Fixed spelling error.
-    - Generate README with the UsefulReadme plugin.
-    - Add a security policy.
-- Tests
-    - Added more author tests.
-    - Moved author tests to xt.
-- Toolchain
-    - Use SigStore instead of Module::Signature.
-    - Update Dist::Zilla configuration.
+- Bug Fixs
+    - Fixed bug when older rotated files are dangling symlinks.
 
 See the `Changes` file for more details.
 

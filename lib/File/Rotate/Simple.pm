@@ -366,13 +366,13 @@ sub _build_files_to_rotate {
     }
 
     my $max  = $self->max;
-    while ($file->exists || ($max && $num <= $max)) {
+    while ($file->exists || -l $file || ($max && $num <= $max)) {
 
         my $rotated = $self->_rotated_name( ++$num );
 
         last if $rotated eq $file;
 
-        if ($file->exists) {
+        if ( $file->exists || -l $file ) {
             $files{ $file } = {
                 current => $file,
                 rotated => (!$max || $num <= $max) ? $rotated : undef,
