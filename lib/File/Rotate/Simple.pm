@@ -236,7 +236,7 @@ constructor, e.g.
         extension_format  => '.%Y%m%d',
     );
 
-L<Time::Moment> and L<DateTime> objects can also be given.
+L<Time::Moment>, L<DateTime>, L<DateTime::Lite> and L<DateTime::Tiny> objects can also be given.
 
 Unlike other attributes, L</time> is read-write, so that it can be
 updated between calls to L</rotate>:
@@ -252,7 +252,7 @@ Added in v0.2.0.
 
 has time => (
     is      => 'rw',
-    isa     => InstanceOf[qw/ Time::Piece Time::Moment DateTime /],
+    isa     => InstanceOf[qw/ Time::Piece Time::Moment DateTime DateTime::Lite DateTime::Tiny /],
     lazy    => 1,
     default => sub { require_module('Time::Piece'); Time::Piece::localtime() },
     handles => {

@@ -1,6 +1,9 @@
 Revision history for File::Rotate::Simple
 
 {{$NEXT}}
+  [Enhancements]
+  - DateTime::Lite and DateTime::Tiny objects can be given for the time attribute.
+
   [Documentation]
   - Updated author email address.
 
