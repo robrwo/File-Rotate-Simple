@@ -8,6 +8,22 @@ Revision history for File::Rotate::Simple
 
   - Fixed link in SOURCE.
 
+  - Fixed spelling error.
+
+  - Generate README with the UsefulReadme plugin.
+
+  - Add a security policy.
+
+  [Tests]
+  - Added more author tests.
+
+  - Moved author tests to xt.
+
+  [Toolchain]
+  - Use SigStore instead of Module::Signature.
+
+  - Update Dist::Zilla configuration.
+
 v0.3.0    2023-05-26 16:02:36+01:00 Europe/London
   [Incompatible Changes]
   - Bump minimum version of Perl to v5.14.
