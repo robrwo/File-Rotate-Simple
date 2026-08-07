@@ -58,7 +58,7 @@ Note that files with the extension `0` are ignored.
 
 # RECENT CHANGES
 
-Changes for version v0.3.1 (2026-08-07)
+Changes for version v0.4.0 (2026-08-07)
 
 - Enhancements
     - DateTime::Lite and DateTime::Tiny objects can be given for the time attribute.
