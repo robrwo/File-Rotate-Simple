@@ -5,6 +5,8 @@ Revision history for File::Rotate::Simple
   [Bug Fixs]
   - Fixed bug when older rotated files are dangling symlinks.
 
+  - Fixed bug when rotating dandling symlinks and age > 0.
+
 v0.4.0    2026-08-07 15:40:41+01:00 Europe/London
   [Enhancements]
   - DateTime::Lite and DateTime::Tiny objects can be given for the time attribute.

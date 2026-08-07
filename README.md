@@ -62,6 +62,7 @@ Changes for version v0.4.1 (2026-08-07)
 
 - Bug Fixs
     - Fixed bug when older rotated files are dangling symlinks.
+    - Fixed bug when rotating dandling symlinks and age > 0.
 
 See the `Changes` file for more details.
 

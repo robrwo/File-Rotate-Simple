@@ -313,7 +313,7 @@ sub rotate {
             next;
         }
 
-        if ($age && $current->stat->mtime < $age) {
+        if ( $age && ( ( $current->exists || -l $current ) && $current->lstat->mtime < $age ) ) {
             $current->remove;
             next;
         }
