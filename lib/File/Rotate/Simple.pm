@@ -15,7 +15,7 @@ use Types::Standard -types;
 
 use namespace::autoclean;
 
-our $VERSION = 'v0.4.1';
+our $VERSION = 'v0.4.2';
 
 # ABSTRACT: no-frills file rotation
 
