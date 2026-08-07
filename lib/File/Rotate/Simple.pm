@@ -351,10 +351,11 @@ sub _build_files_to_rotate {
     my $num = $self->start_num;
 
     my $file = $self->_rotated_name( $num );
-    if ($self->file->exists) {
+    my $orig = $self->file;
+    if ( $orig->exists || -l $orig ) {
 
-        $files{ $self->file } = {
-            current => $self->file,
+        $files{ $orig } = {
+            current => $orig,
             rotated => $file,
         };
 

@@ -62,6 +62,8 @@ Changes for version v0.3.1 (2026-08-07)
 
 - Enhancements
     - DateTime::Lite and DateTime::Tiny objects can be given for the time attribute.
+- Security
+    - If the log file is a dangling link, then it will be rotated without touching the destination (CVE-2026-17435).
 - Documentation
     - Updated author email address.
     - Update copyright year.

@@ -4,6 +4,9 @@ Revision history for File::Rotate::Simple
   [Enhancements]
   - DateTime::Lite and DateTime::Tiny objects can be given for the time attribute.
 
+  [Security]
+  - If the log file is a dangling link, then it will be rotated without touching the destination (CVE-2026-17435).
+
   [Documentation]
   - Updated author email address.
 
