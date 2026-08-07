@@ -6,6 +6,8 @@ Revision history for File::Rotate::Simple
 
   - Update copyright year.
 
+  - Fixed link in SOURCE.
+
 v0.3.0    2023-05-26 16:02:36+01:00 Europe/London
   [Incompatible Changes]
   - Bump minimum version of Perl to v5.14.

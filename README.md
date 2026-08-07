@@ -220,7 +220,7 @@ There are also several logging modueles that support log rotation.
 # SOURCE
 
 The development version is on github at [https://github.com/robrwo/File-Rotate-Simple](https://github.com/robrwo/File-Rotate-Simple)
-and may be cloned from [git://github.com/robrwo/File-Rotate-Simple.git](git://github.com/robrwo/File-Rotate-Simple.git)
+and may be cloned from [https://github.com/robrwo/File-Rotate-Simple.git](https://github.com/robrwo/File-Rotate-Simple.git)
 
 # BUGS
 
