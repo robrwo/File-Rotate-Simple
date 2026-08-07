@@ -25,6 +25,12 @@ our $VERSION = 'v0.3.1';
 
 our @EXPORT_OK = qw/ rotate_files /;
 
+=begin :prelude
+
+=for stopwords backported compatability
+
+=end :prelude
+
 =head1 SYNOPSIS
 
   use File::Rotate::Simple qw/ rotate_files /;
@@ -505,7 +511,7 @@ The following modules have similar functionality:
 
 =back
 
-There are also several logging modueles that support log rotation.
+There are also several logging modules that support log rotation.
 
 =cut
 
