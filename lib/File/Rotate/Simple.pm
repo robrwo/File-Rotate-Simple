@@ -27,7 +27,7 @@ our @EXPORT_OK = qw/ rotate_files /;
 
 =begin :prelude
 
-=for stopwords backported compatability
+=for stopwords backported
 
 =end :prelude
 
@@ -195,7 +195,7 @@ has replace_extension => (
 =head2 C<if_missing>
 
 When true, rotate the files even when L</file> is missing. True by
-default, for backwards compatability.
+default, for backwards compatibility.
 
 Added in v0.2.0.
 

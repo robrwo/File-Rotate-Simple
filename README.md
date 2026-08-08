@@ -60,6 +60,8 @@ Note that files with the extension `0` are ignored.
 
 Changes for version v0.4.2 (2026-08-08)
 
+- Documentation
+    - Fixed typos.
 - Tests
     - Updated the tests to skip symlink tests where symlink support is unavailable.
 
